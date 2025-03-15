@@ -1,11 +1,12 @@
 import webview
 import socket
 import os
-from dotenv import load_dotenv
+from dotenv import load_dotenv, get_key
 
 load_dotenv()
 
-print(f"APP_MODE value: {os.getenv('APP_MODE')}")
+APP_MODE = get_key('.env', 'APP_MODE').lower()
+print(f"APP_MODE value: {APP_MODE}")
 print(f"Current directory: {os.getcwd()}")
 
 class Api:
@@ -13,9 +14,7 @@ class Api:
         return socket.gethostname()
 
 def run_pywebview():
-    app_mode = os.getenv('APP_MODE', 'production').lower()
-
-    if app_mode == 'development':
+    if APP_MODE == 'development':
         url = 'http://localhost:3000'
         print("🔧 Development mode: Using React dev server")
     else:
@@ -35,7 +34,9 @@ def run_pywebview():
         width=1440,
         height=1024
     )
-    webview.start()
+    webview.start(
+        icon='./frontend/public/logo512.png'
+        )
 
 if __name__ == '__main__':
     run_pywebview()
