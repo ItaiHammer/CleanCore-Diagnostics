@@ -5,34 +5,29 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-print(f"PY_ENV value: {os.getenv('PY_ENV')}")
+print(f"APP_MODE value: {os.getenv('APP_MODE')}")
 print(f"Current directory: {os.getcwd()}")
-print(f"File location: {os.path.abspath(__file__)}")
 
 class Api:
     def get_name(self):
         return socket.gethostname()
 
 def run_pywebview():
-    env = os.getenv('PY_ENV', 'Development').lower()
-    
-    if env == 'development':
+    app_mode = os.getenv('APP_MODE', 'production').lower()
+
+    if app_mode == 'development':
         url = 'http://localhost:3000'
-        print("Using development server")
+        print("🔧 Development mode: Using React dev server")
     else:
         base_dir = os.path.dirname(os.path.abspath(__file__))
         build_path = os.path.join(base_dir, 'web', 'index.html')
-        print(f"Looking for build at: {build_path}")
         
         if not os.path.exists(build_path):
-            print("Production build not found! Falling back to development server")
-            url = 'http://localhost:3000'
-        else:
-            url = f'file:///{build_path}'
-            print("Using production build")
+            raise FileNotFoundError(f"Production build not found at: {build_path}")
+        
+        url = f'./{build_path}'
+        print("🚀 Production mode: Using built files")
 
-    print(f"Final URL: {url}")
-    
     window = webview.create_window(
         'CleanCore',
         url=url,
