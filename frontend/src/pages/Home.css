@@ -1,0 +1,52 @@
+.home-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #1A1B1F;
+  position: relative;
+  overflow: hidden;
+}
+
+.sun {
+  position: absolute;
+  width: 365px;
+  height: 365px;
+  background: radial-gradient(circle at 50% 20%, 
+    #FEDE54 0%, 
+    #FE2B78 100%);
+  border-radius: 50%;
+  z-index: 0;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 25%;
+}
+
+.title-group {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  transform: translateY(-15%);
+}
+
+.hello-text {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 900;
+  font-size: 192px;
+  color: #101115;
+  margin: 0;
+  line-height: 0.7;
+  position: relative;
+}
+
+.username {
+  font-family: 'Pacifico', cursive;
+  font-weight: 400;
+  font-size: 96px;
+  color: #FFFFFF;
+  margin: -80px 0 0 30px;
+  position: relative;
+  z-index: 2;
+  transform: rotate(-5deg);
+}

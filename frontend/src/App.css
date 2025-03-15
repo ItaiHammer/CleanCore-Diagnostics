@@ -1,0 +1,19 @@
+.app-container {
+  display: flex;
+  height: 100vh;
+  background-color: #1A1B1F;
+  color: #fff;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.content-container {
+  flex: 1;
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.page {
+  height: 100%;
+  width: 100%;
+}
