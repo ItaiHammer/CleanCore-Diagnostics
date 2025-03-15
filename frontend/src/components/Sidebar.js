@@ -77,7 +77,7 @@ function Sidebar({ activePage, onChangePage }) {
         ))}
       </nav>
 
-      <a href="https://www.buymeacoffee.com/itaihammer" target="_blank">
+      <a href="https://www.buymeacoffee.com/itaihammer" target="_blank" rel="noreferrer">
           <motion.button
           initial={{ opacity: 0, y: 20}}
           animate={{ opacity: 1, y: 0, transition: { duration: 0.8, delay: 0.6 }}}

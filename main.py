@@ -1,19 +1,46 @@
-import eel
-import psutil
+import webview
 import socket
+import os
+from dotenv import load_dotenv
 
-eel.init('web')
+load_dotenv()
 
-@eel.expose
-def get_system_info():
-    return {
-        "cpu": psutil.cpu_percent(interval=1),
-        "ram": psutil.virtual_memory().percent,
-        "disk": psutil.disk_usage('/').percent
-    }
+print(f"PY_ENV value: {os.getenv('PY_ENV')}")
+print(f"Current directory: {os.getcwd()}")
+print(f"File location: {os.path.abspath(__file__)}")
 
-@eel.expose
-def get_name():
-    return socket.gethostname()
+class Api:
+    def get_name(self):
+        return socket.gethostname()
 
-eel.start('index.html', app_mode=True, size=(1440, 1024), mode='edge')
+def run_pywebview():
+    env = os.getenv('PY_ENV', 'Development').lower()
+    
+    if env == 'development':
+        url = 'http://localhost:3000'
+        print("Using development server")
+    else:
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+        build_path = os.path.join(base_dir, 'web', 'index.html')
+        print(f"Looking for build at: {build_path}")
+        
+        if not os.path.exists(build_path):
+            print("Production build not found! Falling back to development server")
+            url = 'http://localhost:3000'
+        else:
+            url = f'file:///{build_path}'
+            print("Using production build")
+
+    print(f"Final URL: {url}")
+    
+    window = webview.create_window(
+        'CleanCore',
+        url=url,
+        js_api=Api(),
+        width=1440,
+        height=1024
+    )
+    webview.start()
+
+if __name__ == '__main__':
+    run_pywebview()
