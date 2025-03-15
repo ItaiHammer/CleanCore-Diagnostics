@@ -4,6 +4,7 @@ import './Sidebar.css';
 
 // icon imports
 import { ReactComponent as BuyMeACoffeIcon } from "../assets/icons/buymeacoffe.svg";
+import { ReactComponent as Logo } from "../assets/icons/logo.svg";
 
 // page imports
 import Home from '../pages/Home';
@@ -54,12 +55,7 @@ function Sidebar({ activePage, onChangePage }) {
     >
       <div className="sidebar-separator" />
       <div className="sidebar-logo">
-        <motion.div
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-        >
-        </motion.div>
+        <Logo />
       </div>
 
       <nav className="nav-links">
@@ -81,15 +77,16 @@ function Sidebar({ activePage, onChangePage }) {
         ))}
       </nav>
 
-      <motion.button
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.6 }}
-        whileHover={{ scale: 1.05 }}
-        className="coffee-btn"
-      >
-        <BuyMeACoffeIcon className="coffee-icon" />
-      </motion.button>
+      <a href="https://www.buymeacoffee.com/itaihammer" target="_blank">
+          <motion.button
+          initial={{ opacity: 0, y: 20}}
+          animate={{ opacity: 1, y: 0, transition: { duration: 0.8, delay: 0.6 }}}
+          whileHover={{ scale: 1.05, transition: {duration: 0.3, delay: 0, ease: "easeInOut"} }}
+          className="coffee-btn"
+        >
+          <BuyMeACoffeIcon className="coffee-icon" />
+        </motion.button>
+      </a>
 
       <div className="bottom-icons">
         <button

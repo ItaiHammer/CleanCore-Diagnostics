@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1000 1000">
+  <!-- Generator: Adobe Illustrator 29.3.1, SVG Export Plug-In . SVG Version: 2.1.0 Build 151)  -->
+  <defs>
+    <style>
+      .st0 {
+        fill: url(#radial-gradient);
+        filter: url(#outer-glow-1);
+      }
+
+      .st1 {
+        fill: #f1f2f2;
+        filter: url(#outer-glow-2);
+      }
+    </style>
+    <radialGradient id="radial-gradient" cx="471.5" cy="277.7" fx="471.5" fy="277.7" r="617.4" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fdde54"/>
+      <stop offset="1" stop-color="#ee3379"/>
+    </radialGradient>
+    <filter id="outer-glow-1" x="-33.1" y="-45.1" width="1078.6" height="1078.6" filterUnits="userSpaceOnUse">
+      <feOffset dx="0" dy="0"/>
+      <feGaussianBlur result="blur" stdDeviation="50"/>
+      <feFlood flood-color="#ee3379" flood-opacity=".8"/>
+      <feComposite in2="blur" operator="in"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="outer-glow-2" x="-41.8" y="-18.5" width="540.2" height="540.2" filterUnits="userSpaceOnUse">
+      <feOffset dx="0" dy="0"/>
+      <feGaussianBlur result="blur1" stdDeviation="40"/>
+      <feFlood flood-color="#f1f2f2" flood-opacity=".8"/>
+      <feComposite in2="blur1" operator="in"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <circle class="st0" cx="506.2" cy="494.2" r="389.2"/>
+  <path class="st1" d="M378.2,251.7c-82.8,0-150-67.2-150-150,0,82.8-67.2,150-150,150,82.8,0,150,67.2,150,150,0-82.8,67.2-150,150-150Z"/>
+</svg>
