@@ -58,3 +58,11 @@
   z-index: 2;
   transform: rotate(-5deg);
 }
+
+@import url('https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap');
+.catch-phrase {
+  font-family: 'Courier Prime', monospace;
+  font-size: 24px;
+  color: #FFFFFF;
+  z-index: 1;
+}

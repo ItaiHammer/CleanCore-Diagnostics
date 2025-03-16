@@ -21,13 +21,37 @@ const sunVariants = {
   }
 };
 
+const splashTexts = [
+  "Cleancore: Because your PC deserves it.",
+  "Keeping things tidy, one byte at a time.",
+  "Smooth sailing ahead! 🌊",
+  "Your PC just took a deep breath. 😌",
+  "Like a fresh install... but better!",
+  "Every click feels faster now. 🏎️",
+  "A clean PC is a happy PC.",
+  "Performance levels: Over 9000!",
+  "Your PC just got a digital detox.",
+  "Like magic, but real!",
+  "No lag, no worries!",
+  "We just took out the digital trash. 🗑️",
+  "Cleaner, faster, better!",
+  "Cleancore: Your system’s best friend.",
+  "The bytes feel lighter already. 🎈",
+  "Junk-free and stress-free! 🌿",
+  "Your PC feels lighter already! 🎈",
+  "Click. Clean. Optimize. Repeat. 🔄",
+  "Because speed matters. 🏎️💨"
+];
+
 export default function Home() {
   const [hostname, setHostname] = useState();
+  const [catchPhrase, setCatchPhrase] = useState(splashTexts[Math.floor(Math.random() * splashTexts.length)]);
+  const [displayText, setDisplayText] = useState("");
 
   useEffect(() => {
     const fetchHostname = async () => {
       try {
-        if (window.pywebview && window.pywebview.api) {
+        if (window.pywebview) {
           const name = await window.pywebview.api.get_name();
           setHostname(name);
         }
@@ -38,17 +62,34 @@ export default function Home() {
     };
 
     fetchHostname();
-  }, [window.pywebview]);
+  }, []);
+
+  useEffect(() => {
+    let i = 0;
+    let text = ""
+    setDisplayText("");
+    const interval = setInterval(() => {
+      if (i < catchPhrase.length) {
+        text += catchPhrase.charAt(i);
+        setDisplayText(text);
+        i++;
+      } else {
+        clearInterval(interval);
+      }
+    }, 50);
+
+    return () => clearInterval(interval);
+  }, [catchPhrase]);
 
   return (
     <div className="home-container">
       <VaporwaveBackground />
       <div className="sun-container">
         <motion.div 
-        className="sun"
-        variants={sunVariants}
-        initial="initial"
-        animate="animate"
+          className="sun"
+          variants={sunVariants}
+          initial="initial"
+          animate="animate"
         />
       </div>
       
@@ -62,7 +103,11 @@ export default function Home() {
         <h2 className="username">{hostname}</h2>
       </motion.div>
 
-      <p style={{zIndex: 1}}>Other content...</p>
+      <p
+        className="catch-phrase"
+      >
+        {displayText}
+      </p>
     </div>
   );
 }

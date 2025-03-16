@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
-import './VaporwaveBackground.css';
+import './Background.css';
 import { motion } from 'framer-motion';
 
 function WavyGrid() {
@@ -38,7 +38,7 @@ function VaporwaveBackground() {
     initial={{ opacity: 0 }}
     animate={{ opacity: 1 }}
     transition={{ duration: 3, ease: 'easeInOut'  }}
-    className="vaporwave-background">
+    className="background-container">
       <Canvas camera={{ position: [0, 15, 15], fov: 75 }} gl={{ alpha: true, powerPreference: "high-performance", antialias: false}}>
         <WavyGrid />
       </Canvas>

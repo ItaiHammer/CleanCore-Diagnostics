@@ -3,6 +3,9 @@ import socket
 import os
 from dotenv import load_dotenv, get_key
 
+# backend imports
+import backend.hardware_utils as hardware_utils
+
 load_dotenv()
 
 APP_MODE = get_key('.env', 'APP_MODE').lower()
@@ -12,6 +15,12 @@ print(f"Current directory: {os.getcwd()}")
 class Api:
     def get_name(self):
         return socket.gethostname()
+
+    def get_cpu_data(self):
+        return hardware_utils.get_cpu_data()
+
+    def get_memory_data(self):
+        return hardware_utils.get_memory_data()
 
 def run_pywebview():
     if APP_MODE == 'development':
@@ -31,12 +40,15 @@ def run_pywebview():
         'CleanCore',
         url=url,
         js_api=Api(),
+        min_size=(900, 700),
         width=1440,
-        height=1024
+        height=1024,
     )
+
     webview.start(
+        debug=APP_MODE == 'development',
         icon='./frontend/public/logo512.png'
-        )
+    )
 
 if __name__ == '__main__':
     run_pywebview()

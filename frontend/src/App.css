@@ -16,3 +16,16 @@
   height: 100%;
   width: 100%;
 }
+
+.loading-screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.loading-logo {
+  width: 100px;
+  height: 100px;
+}
