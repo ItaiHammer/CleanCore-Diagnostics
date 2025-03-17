@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import './Sidebar.css';
 
 // icon imports
-import { ReactComponent as BuyMeACoffeIcon } from "../assets/icons/buymeacoffe.svg";
+import { ReactComponent as BuyMeACoffeeIcon } from "../assets/icons/buymeacoffee.svg";
+import { ReactComponent as BuyMeACoffeeIco } from "../assets/icons/buymecoffeeico.svg";
 import { ReactComponent as Logo } from "../assets/icons/logo.svg";
 
 // page imports
@@ -51,14 +52,50 @@ export const pages = [
   },
 ];
 
+const CollapseExpandIcon = ({ isCollapsed }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="12"
+    height="24"
+    viewBox="0 0 12 24"
+    style={{ transform: isCollapsed ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.3s ease' }}
+  >
+    <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="M10.157 12.711L4.5 18.368l-1.414-1.414l4.95-4.95l-4.95-4.95L4.5 5.64l5.657 5.657a1 1 0 0 1 0 1.414"
+    />
+  </svg>
+);
+
 function Sidebar({ activePage, onChangePage }) {
+  const [isCollapsed, setIsCollapsed] = useState(false);
+
+  useEffect(() => {
+    window.pywebview.api.get_config_value('sidebarCollapsed').then((state) => {
+      setIsCollapsed(state);
+    });
+  }, []);
+
+  const toggleSidebar = () => {
+    const newState = !isCollapsed;
+    setIsCollapsed(newState);
+    window.pywebview.api.set_config_value('sidebarCollapsed', newState);
+  };
+
   return (
     <motion.aside
-      className="sidebar"
+      className={`sidebar ${isCollapsed ? 'collapsed' : ''}`}
       variants={sidebarVariants}
       initial="initial"
       animate="animate"
     >
+      <button
+        className="collapse-btn"
+        onClick={toggleSidebar}
+      >
+        <CollapseExpandIcon isCollapsed={isCollapsed} />
+      </button>
       <div className="sidebar-separator" />
       <div className="sidebar-logo">
         <Logo />
@@ -77,20 +114,27 @@ function Sidebar({ activePage, onChangePage }) {
             transition={{ duration: 0.3, delay: (page.id * 0.1) + 0.3 }}
             whileHover={{ scale: 1.05 }}
           >
-            {page.icon}
-            {page.label}
+            <span className="sidebar-icon">{page.icon}</span>
+            <motion.span
+              initial={{ opacity: 0 }}
+              animate={{ opacity: isCollapsed ? 0 : 1 }}
+              transition={{ duration: 0.3 }}
+              className={`sidebar-label ${isCollapsed ? 'hidden' : ''}`}
+            >
+              {page.label}
+            </motion.span>
           </motion.button>
         ))}
       </nav>
 
       <a href="https://www.buymeacoffee.com/itaihammer" target="_blank" rel="noreferrer">
-          <motion.button
-          initial={{ opacity: 0, y: 20}}
+        <motion.button
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0, transition: { duration: 0.8, delay: 0.6 }}}
-          whileHover={{ scale: 1.05, transition: {duration: 0.3, delay: 0, ease: "easeInOut"} }}
+          whileHover={{ scale: 1.05, transition: { duration: 0.3, delay: 0, ease: "easeInOut" }}}
           className="coffee-btn"
         >
-          <BuyMeACoffeIcon className="coffee-icon" />
+          {isCollapsed ? <BuyMeACoffeeIco className="coffee-icon" /> : <BuyMeACoffeeIcon className="coffee-icon" />}
         </motion.button>
       </a>
 

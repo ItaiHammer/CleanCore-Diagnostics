@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { LineChart, Line, XAxis, YAxis, ResponsiveContainer } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, ResponsiveContainer, CartesianGrid } from 'recharts';
 
 const MetricCard = ({ metric, data, history, index }) => {
   const metricsCardVarients = {
@@ -68,7 +68,8 @@ const MetricCard = ({ metric, data, history, index }) => {
               animationDuration={0}
             />
             <XAxis dataKey="time" hide />
-            <YAxis hide domain={[0, 100]} />
+            <YAxis hide domain={[0, 100]} ticks={[0, 20, 40, 60, 80, 100]} />
+            <CartesianGrid stroke="#2A2B2E" strokeDasharray="0" vertical={false} />
           </LineChart>
         </ResponsiveContainer>
       </div>
