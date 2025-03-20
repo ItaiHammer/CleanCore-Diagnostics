@@ -2,10 +2,9 @@ import { useEffect, useState } from 'react';
 import MetricCard from '../components/MetricCard';
 import { motion } from 'framer-motion';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
-
 import './Dashboard.css';
-
 import Background from '../components/PulsingBackground';
+import BackendApi from '../utils/BackendApi';
 
 const metricsCardVarients = {
   initial: {
@@ -37,10 +36,8 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchHostname = async () => {
       try {
-        if (window.pywebview?.api) {
-          const name = await window.pywebview.api.get_name();
-          setHostname(name);
-        }
+        const name = await BackendApi.get_name();
+        setHostname(name);
       } catch (error) {
         setHostname('Your Device');
       }
@@ -51,33 +48,31 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchHardwareData = async () => {
       try {
-        if (window.pywebview?.api) {
-          const [cpu, memory] = await Promise.all([
-            window.pywebview.api.get_cpu_data(),
-            window.pywebview.api.get_memory_data()
-          ]);
+        const [cpu, memory] = await Promise.all([
+          BackendApi.System.HardwareUtils.get_cpu_data(),
+          BackendApi.System.HardwareUtils.get_memory_data()
+        ]);
 
-          setCpuHistory(prev => [
-            ...prev.slice(-59),
-            { time: Date.now(), usage: cpu.percent_usage }
-          ]);
+        setCpuHistory(prev => [
+          ...prev.slice(-59),
+          { time: Date.now(), usage: cpu.percent_usage }
+        ]);
 
-          setMemoryHistory(prev => [
-            ...prev.slice(-59),
-            { time: Date.now(), usage: memory.percent_usage }
-          ]);
+        setMemoryHistory(prev => [
+          ...prev.slice(-59),
+          { time: Date.now(), usage: memory.percent_usage }
+        ]);
 
-          setCpuData({
-            usage: cpu.percent_usage,
-            speed: (cpu.speed / 1000).toFixed(2)
-          });
+        setCpuData({
+          usage: cpu.percent_usage,
+          speed: (cpu.speed / 1000).toFixed(2)
+        });
 
-          setMemoryData({
-            used: (memory.used / (1024 ** 3)).toFixed(1),
-            total: (memory.total / (1024 ** 3)).toFixed(1),
-            percent: memory.percent_usage
-          });
-        }
+        setMemoryData({
+          used: (memory.used / (1024 ** 3)).toFixed(1),
+          total: (memory.total / (1024 ** 3)).toFixed(1),
+          percent: memory.percent_usage
+        });
       } catch (error) {
         console.error('Data fetch error:', error);
       }

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import './Sidebar.css';
+import BackendApi from '../utils/BackendApi';
 
 // icon imports
 import { ReactComponent as BuyMeACoffeeIcon } from "../assets/icons/buymeacoffee.svg";
@@ -74,7 +75,9 @@ function Sidebar({ activePage, onChangePage }) {
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   useEffect(() => {
-    window.pywebview.api.get_config_value('sidebarCollapsed').then((state) => {
+    console.log("BackendApi");
+    console.log(BackendApi);
+    BackendApi.App.ConfigManager.get_config_value('sidebarCollapsed').then((state) => {
       setIsCollapsed(state);
     });
   }, []);
@@ -82,7 +85,7 @@ function Sidebar({ activePage, onChangePage }) {
   const toggleSidebar = () => {
     const newState = !isCollapsed;
     setIsCollapsed(newState);
-    window.pywebview.api.set_config_value('sidebarCollapsed', newState);
+    BackendApi.App.ConfigManager.set_config_value('sidebarCollapsed', newState);
   };
 
   return (

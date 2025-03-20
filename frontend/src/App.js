@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Sidebar, { pages } from './components/Sidebar';
 import './App.css';
 import logo from './assets/icons/logo.svg';
+import BackendApi from './utils/BackendApi';
 
 const pageVariants = {
   initial: {

@@ -7,7 +7,8 @@ from dotenv import load_dotenv, get_key
 from screeninfo import get_monitors
 
 # backend imports
-import backend.hardware_utils as hardware_utils
+from backend.App import App
+from backend.System import System
 
 load_dotenv()
 
@@ -20,33 +21,19 @@ else:
 print(f"APP_MODE value: {APP_MODE}")
 print(f"Current directory: {os.getcwd()}")
 
-CONFIG_FILE = 'config.json'
-
 class Api:
+    def __init__(self):
+        self.App = App()
+        self.System = System()
+
     def get_name(self):
+        name = self.App.ConfigManager.get_config_value('system_name')
+        if name:
+            return name
         return socket.gethostname()
 
-    def get_cpu_data(self):
-        return hardware_utils.get_cpu_data()
-
-    def get_memory_data(self):
-        return hardware_utils.get_memory_data()
-
-    def get_config_value(self, key):
-        if os.path.exists(CONFIG_FILE):
-            with open(CONFIG_FILE, 'r') as file:
-                config = json.load(file)
-                return config.get(key, None)
-        return None
-
-    def set_config_value(self, key, value):
-        config = {}
-        if os.path.exists(CONFIG_FILE):
-            with open(CONFIG_FILE, 'r') as file:
-                config = json.load(file)
-        config[key] = value
-        with open(CONFIG_FILE, 'w') as file:
-            json.dump(config, file)
+    def set_name(self, name):
+        self.App.ConfigManager.set_config_value('system_name', name)
 
 def resource_path(relative_path):
     """ Get absolute path to resource, works for dev and for PyInstaller """

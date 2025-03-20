@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import VaporwaveBackground from '../components/VaporwaveBackground.js';
 import './Home.css';
+import BackendApi from '../utils/BackendApi';
 
 const sunVariants = {
   initial: {
@@ -51,10 +52,8 @@ export default function Home() {
   useEffect(() => {
     const fetchHostname = async () => {
       try {
-        if (window.pywebview) {
-          const name = await window.pywebview.api.get_name();
-          setHostname(name);
-        }
+        const name = await BackendApi.get_name();
+        setHostname(name);
       } catch (error) {
         console.error('Error fetching hostname:', error);
         setHostname("User");
