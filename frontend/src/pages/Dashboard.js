@@ -1,10 +1,16 @@
-import { useEffect, useState } from 'react';
-import MetricCard from '../components/MetricCard';
-import { motion } from 'framer-motion';
-import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
-import './Dashboard.css';
-import Background from '../components/PulsingBackground';
-import BackendApi from '../utils/BackendApi';
+import { useEffect, useState } from "react";
+import MetricCard from "../components/MetricCard";
+import { motion } from "framer-motion";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
+import "./Dashboard.css";
+import Background from "../components/PulsingBackground";
 
 const metricsCardVarients = {
   initial: {
@@ -17,29 +23,39 @@ const metricsCardVarients = {
     transition: {
       duration: 0.4,
       delay: custom * 0.1,
-      ease: 'easeOut',
+      ease: "easeOut",
     },
   }),
 };
 
 const Dashboard = () => {
   const [cpuData, setCpuData] = useState({ usage: 0, speed: 0 });
-  const [memoryData, setMemoryData] = useState({ used: 0, total: 0, percent: 0 });
+  const [memoryData, setMemoryData] = useState({
+    used: 0,
+    total: 0,
+    percent: 0,
+  });
   const [cpuHistory, setCpuHistory] = useState(
-    Array.from({ length: 60 }, (_, i) => ({ time: Date.now() - (60 - i) * 1000, usage: 0 }))
+    Array.from({ length: 60 }, (_, i) => ({
+      time: Date.now() - (60 - i) * 1000,
+      usage: 0,
+    }))
   );
   const [memoryHistory, setMemoryHistory] = useState(
-    Array.from({ length: 60 }, (_, i) => ({ time: Date.now() - (60 - i) * 1000, usage: 0 }))
+    Array.from({ length: 60 }, (_, i) => ({
+      time: Date.now() - (60 - i) * 1000,
+      usage: 0,
+    }))
   );
-  const [hostname, setHostname] = useState('');
+  const [hostname, setHostname] = useState("");
 
   useEffect(() => {
     const fetchHostname = async () => {
       try {
-        const name = await BackendApi.get_name();
+        const name = await window.pywebview.api.get_name();
         setHostname(name);
       } catch (error) {
-        setHostname('Your Device');
+        setHostname("Your Device");
       }
     };
     fetchHostname();
@@ -49,32 +65,32 @@ const Dashboard = () => {
     const fetchHardwareData = async () => {
       try {
         const [cpu, memory] = await Promise.all([
-          BackendApi.System.HardwareUtils.get_cpu_data(),
-          BackendApi.System.HardwareUtils.get_memory_data()
+          window.pywebview.api.System.HardwareUtils.get_cpu_data(),
+          window.pywebview.api.System.HardwareUtils.get_memory_data(),
         ]);
 
-        setCpuHistory(prev => [
+        setCpuHistory((prev) => [
           ...prev.slice(-59),
-          { time: Date.now(), usage: cpu.percent_usage }
+          { time: Date.now(), usage: cpu.percent_usage },
         ]);
 
-        setMemoryHistory(prev => [
+        setMemoryHistory((prev) => [
           ...prev.slice(-59),
-          { time: Date.now(), usage: memory.percent_usage }
+          { time: Date.now(), usage: memory.percent_usage },
         ]);
 
         setCpuData({
           usage: cpu.percent_usage,
-          speed: (cpu.speed / 1000).toFixed(2)
+          speed: (cpu.speed / 1000).toFixed(2),
         });
 
         setMemoryData({
-          used: (memory.used / (1024 ** 3)).toFixed(1),
-          total: (memory.total / (1024 ** 3)).toFixed(1),
-          percent: memory.percent_usage
+          used: (memory.used / 1024 ** 3).toFixed(1),
+          total: (memory.total / 1024 ** 3).toFixed(1),
+          percent: memory.percent_usage,
         });
       } catch (error) {
-        console.error('Data fetch error:', error);
+        console.error("Data fetch error:", error);
       }
     };
 
@@ -91,12 +107,12 @@ const Dashboard = () => {
       </div>
 
       <motion.div className="metrics-grid">
-        {['CPU', 'Memory'].map((metric, index) => (
+        {["CPU", "Memory"].map((metric, index) => (
           <MetricCard
             key={index}
             metric={metric}
-            data={metric === 'CPU' ? cpuData : memoryData}
-            history={metric === 'CPU' ? cpuHistory : memoryHistory}
+            data={metric === "CPU" ? cpuData : memoryData}
+            history={metric === "CPU" ? cpuHistory : memoryHistory}
             index={index}
           />
         ))}

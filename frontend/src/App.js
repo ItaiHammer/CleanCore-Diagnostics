@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import Sidebar, { pages } from './components/Sidebar';
-import './App.css';
-import logo from './assets/icons/logo.svg';
-import BackendApi from './utils/BackendApi';
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import Sidebar, { pages } from "./components/Sidebar";
+import "./App.css";
+import logo from "./assets/icons/logo.svg";
 
 const pageVariants = {
   initial: {
@@ -30,7 +29,7 @@ const loadingVariants = {
   animate: { scale: [1, 1.4, 1] },
 };
 
-function App () {
+function App() {
   const [activePage, setActivePage] = useState(pages[0]);
   const [isApiReady, setIsApiReady] = useState(false);
 
@@ -47,17 +46,15 @@ function App () {
   if (!isApiReady) {
     return (
       <div className="app-container">
-        <div
-          className="loading-screen"
-        >
-          <motion.img 
-          variants={loadingVariants}
-          animate="animate"
-          transition={{ duration: 1, repeat: Infinity, ease: "circOut" }}
-          
-          src={logo} 
-          alt="Loading..." 
-          className="loading-logo" />
+        <div className="loading-screen">
+          <motion.img
+            variants={loadingVariants}
+            animate="animate"
+            transition={{ duration: 1, repeat: Infinity, ease: "circOut" }}
+            src={logo}
+            alt="Loading..."
+            className="loading-logo"
+          />
         </div>
       </div>
     );
@@ -68,7 +65,7 @@ function App () {
     <div className="app-container">
       <Sidebar activePage={activePage} onChangePage={setActivePage} />
       <div className="content-container">
-        <AnimatePresence mode='wait'>
+        <AnimatePresence mode="wait">
           <motion.div
             key={activePage.id}
             variants={pageVariants}
@@ -84,6 +81,6 @@ function App () {
       </div>
     </div>
   );
-};
+}
 
 export default App;

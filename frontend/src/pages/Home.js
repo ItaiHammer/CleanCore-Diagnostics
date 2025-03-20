@@ -1,8 +1,7 @@
-import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import VaporwaveBackground from '../components/VaporwaveBackground.js';
-import './Home.css';
-import BackendApi from '../utils/BackendApi';
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import VaporwaveBackground from "../components/VaporwaveBackground.js";
+import "./Home.css";
 
 const sunVariants = {
   initial: {
@@ -18,8 +17,8 @@ const sunVariants = {
       duration: 4,
       ease: "easeInOut",
       repeat: Infinity,
-    }
-  }
+    },
+  },
 };
 
 const splashTexts = [
@@ -41,21 +40,23 @@ const splashTexts = [
   "Junk-free and stress-free! 🌿",
   "Your PC feels lighter already! 🎈",
   "Click. Clean. Optimize. Repeat. 🔄",
-  "Because speed matters. 🏎️💨"
+  "Because speed matters. 🏎️💨",
 ];
 
 export default function Home() {
   const [hostname, setHostname] = useState();
-  const [catchPhrase, setCatchPhrase] = useState(splashTexts[Math.floor(Math.random() * splashTexts.length)]);
+  const [catchPhrase, setCatchPhrase] = useState(
+    splashTexts[Math.floor(Math.random() * splashTexts.length)]
+  );
   const [displayText, setDisplayText] = useState("");
 
   useEffect(() => {
     const fetchHostname = async () => {
       try {
-        const name = await BackendApi.get_name();
+        const name = await window.pywebview.api.get_name();
         setHostname(name);
       } catch (error) {
-        console.error('Error fetching hostname:', error);
+        console.error("Error fetching hostname:", error);
         setHostname("User");
       }
     };
@@ -65,7 +66,7 @@ export default function Home() {
 
   useEffect(() => {
     let i = 0;
-    let text = ""
+    let text = "";
     setDisplayText("");
     const interval = setInterval(() => {
       if (i < catchPhrase.length) {
@@ -84,15 +85,15 @@ export default function Home() {
     <div className="home-container">
       <VaporwaveBackground />
       <div className="sun-container">
-        <motion.div 
+        <motion.div
           className="sun"
           variants={sunVariants}
           initial="initial"
           animate="animate"
         />
       </div>
-      
-      <motion.div 
+
+      <motion.div
         className="title-group"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -102,11 +103,7 @@ export default function Home() {
         <h2 className="username">{hostname}</h2>
       </motion.div>
 
-      <p
-        className="catch-phrase"
-      >
-        {displayText}
-      </p>
+      <p className="catch-phrase">{displayText}</p>
     </div>
   );
 }
