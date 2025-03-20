@@ -26,9 +26,7 @@ const pageTransition = {
 };
 
 const loadingVariants = {
-  initial: { scale: 1},
-  animate: { scale: 1.2, rotate: 360 },
-  exit: { scale: 1 },
+  animate: { scale: [1, 1.4, 1] },
 };
 
 function App () {
@@ -53,9 +51,7 @@ function App () {
         >
           <motion.img 
           variants={loadingVariants}
-          initial="initial"
           animate="animate"
-          exit="exit"
           transition={{ duration: 1, repeat: Infinity, ease: "circOut" }}
           
           src={logo} 
