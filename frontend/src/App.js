@@ -26,9 +26,9 @@ const pageTransition = {
 };
 
 const loadingVariants = {
-  initial: { opacity: 0 },
-  animate: { opacity: 1, rotate: 360 },
-  exit: { opacity: 0 },
+  initial: { scale: 1},
+  animate: { scale: 1.2, rotate: 360 },
+  exit: { scale: 1 },
 };
 
 function App () {
@@ -48,21 +48,25 @@ function App () {
   if (!isApiReady) {
     return (
       <div className="app-container">
-        <motion.div
+        <div
           className="loading-screen"
+        >
+          <motion.img 
           variants={loadingVariants}
           initial="initial"
           animate="animate"
           exit="exit"
-          transition={{ duration: 1, repeat: Infinity }}
-        >
-          <img src={logo} alt="Loading..." className="loading-logo" />
-        </motion.div>
+          transition={{ duration: 1, repeat: Infinity, ease: "circOut" }}
+          
+          src={logo} 
+          alt="Loading..." 
+          className="loading-logo" />
+        </div>
       </div>
     );
   }
 
-  // non loading
+  // not loading
   return (
     <div className="app-container">
       <Sidebar activePage={activePage} onChangePage={setActivePage} />
