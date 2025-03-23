@@ -27,13 +27,16 @@ class Api:
         self.System = System()
 
     def get_name(self):
-        name = self.App.ConfigManager.get_config_value('system_name')
+        name = self.App.ConfigManager.get_config_value('systemName')
         if name:
             return name
         return socket.gethostname()
 
     def set_name(self, name):
-        self.App.ConfigManager.set_config_value('system_name', name)
+        self.App.ConfigManager.set_config_value('systemName', name)
+
+    def delete_name(self):
+        return self.App.ConfigManager.delete_config_value('systemName')
 
 def resource_path(relative_path):
     """ Get absolute path to resource, works for dev and for PyInstaller """

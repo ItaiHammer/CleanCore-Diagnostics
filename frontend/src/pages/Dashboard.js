@@ -10,7 +10,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import "./Dashboard.css";
-import Background from "../components/PulsingBackground";
+import Background from "../components/backgrounds/PulsingBackground";
 
 const metricsCardVarients = {
   initial: {

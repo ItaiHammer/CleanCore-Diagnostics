@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import Background from '../components/StructuredSquaresBackground';
+import Background from '../components/backgrounds/StructuredSquaresBackground';
 
 function Storage() {
   const [hostname, setHostname] = useState('');

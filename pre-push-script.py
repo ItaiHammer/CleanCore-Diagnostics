@@ -9,8 +9,8 @@ build_dir = os.path.join(frontend_dir, 'build')
 config_file = os.path.join(root_dir, 'config.json')
 default_config_file = os.path.join(root_dir, 'default-config.json')
 
-# Full path to npm executable
-npm_path = os.path.join('C:', 'Program Files', 'nodejs', 'npm.cmd')
+# Find npm executable in the system's PATH
+npm_path = shutil.which('npm')
 
 # Delete the web folder in the root directory
 if os.path.exists(web_dir):

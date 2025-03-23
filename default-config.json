@@ -1,3 +1,5 @@
 {
-  "sidebarCollapsed": false
+  "sidebarCollapsed": false,
+  "antialias": true,
+  "powerPreference": "low-power"
 }

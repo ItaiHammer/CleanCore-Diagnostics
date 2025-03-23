@@ -19,3 +19,14 @@ class ConfigManager:
         config[key] = value
         with open(CONFIG_FILE, 'w') as file:
             json.dump(config, file)
+
+    def delete_config_value(self, key):
+        if os.path.exists(CONFIG_FILE):
+            with open(CONFIG_FILE, 'r') as file:
+                config = json.load(file)
+            if key in config:
+                del config[key]
+                with open(CONFIG_FILE, 'w') as file:
+                    json.dump(config, file)
+                return True
+        return False

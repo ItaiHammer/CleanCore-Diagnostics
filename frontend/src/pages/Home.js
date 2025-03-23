@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import VaporwaveBackground from "../components/VaporwaveBackground.js";
+import VaporwaveBackground from "../components/backgrounds/VaporwaveBackground.js";
 import "./Home.css";
 
 const sunVariants = {

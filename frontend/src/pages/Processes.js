@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Background from '../components/SpinningShapesBackground';
+import Background from '../components/backgrounds/SpinningShapesBackground';
 
 function Processes() {
   const [hostname, setHostname] = useState('');
