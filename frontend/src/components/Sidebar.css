@@ -1,3 +1,18 @@
+.sidebar-container {
+  position: relative;
+  width: 270px;
+  height: 100vh;
+  float: left;
+  transition: width 0.3s ease, padding 0.3s ease;
+}
+
+.sidebar-container.collapsed {
+  position: relative;
+  width: 80px;
+  height: 100vh;
+  float: left;
+}
+
 .sidebar {
   width: 275px;
   background-color: #1A1B1F;
@@ -7,7 +22,9 @@
   padding: 50px;
   height: 100vh;
   box-sizing: border-box;
-  position: relative;
+  position: fixed;
+  top: 0;
+  z-index: 1;
   user-select: none;
   transition: width 0.3s ease, padding 0.3s ease;
 }

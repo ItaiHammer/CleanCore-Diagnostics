@@ -38,8 +38,8 @@ function PulsingBackground() {
 
   useEffect(() => {
     const fetchSettings = async () => {
-      const antialias = await window.pywebview.api.App.get_config_value("antialias");
-      const powerPreference = await window.pywebview.api.App.get_config_value("powerPreference");
+      const antialias = await window.pywebview.api.App.ConfigManager.get_config_value("antialias");
+      const powerPreference = await window.pywebview.api.App.ConfigManager.get_config_value("powerPreference");
       setAntialias(antialias);
       setPowerPreference(powerPreference);
     };
