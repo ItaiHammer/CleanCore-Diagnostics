@@ -49,10 +49,10 @@ function VaporwaveBackground() {
 
   return (
     <motion.div
-    initial={{ opacity: 0 }}
-    animate={{ opacity: 1 }}
-    transition={{ duration: 3, ease: 'easeInOut'  }}
-    className="background-container">
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 3, ease: 'easeInOut'  }}
+      className="background-container">
       <Canvas camera={{ position: [0, 15, 15], fov: 75 }} gl={{ alpha: true, powerPreference, antialias }}>
         <WavyGrid />
       </Canvas>

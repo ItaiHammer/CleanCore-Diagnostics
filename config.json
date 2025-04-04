@@ -1,4 +1,6 @@
 {
+  "hasSeenWelcome": false,
+
   "sidebarCollapsed": true,
   "antialias": true,
   "powerPreference": "low-power"

@@ -58,7 +58,11 @@ def run_pywebview():
         if not os.path.exists(build_path):
             raise FileNotFoundError(f"Production build not found at: {build_path}")
         
-        url = f'./{build_path}'
+        # Format the file:// URL for compatibility across platforms
+        if sys.platform == 'win32':
+            url = f'file:///{os.path.abspath(build_path).replace("\\", "/")}'
+        else:
+            url = f'file://{os.path.abspath(build_path)}'
 
     # Get primary screen size
     primary_monitor = next(m for m in get_monitors() if m.is_primary)

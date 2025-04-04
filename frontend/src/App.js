@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Sidebar, { pages } from "./components/Sidebar";
+import WelcomePage from "./pages/WelcomePage";
 import "./App.css";
 import logo from "./assets/icons/logo.svg";
 
@@ -32,18 +33,27 @@ const loadingVariants = {
 function App() {
   const [activePage, setActivePage] = useState(pages[0]);
   const [isApiReady, setIsApiReady] = useState(false);
+  const [hasSeenWelcome, setHasSeenWelcome] = useState(null);
 
   useEffect(() => {
-    const checkApiReady = setInterval(() => {
+    const checkApiReady = setInterval(async () => {
       if (window.pywebview && window.pywebview.api) {
         setIsApiReady(true);
         clearInterval(checkApiReady);
+        const seenWelcome = await window.pywebview.api.App.ConfigManager.get_config_value("hasSeenWelcome");
+        setHasSeenWelcome(seenWelcome);
       }
     }, 100);
   }, []);
 
+  useEffect(() => {
+    if (hasSeenWelcome) {
+      console.log("Welcome page has been seen.");
+    }
+  }, [hasSeenWelcome]);
+
   // loading screen
-  if (!isApiReady) {
+  if (!isApiReady || hasSeenWelcome === null) {
     return (
       <div className="app-container">
         <div className="loading-screen">
@@ -56,6 +66,17 @@ function App() {
             className="loading-logo"
           />
         </div>
+      </div>
+    );
+  }
+
+  console.log(`Has seen welcome: ${hasSeenWelcome}`);
+
+  // first time you open the app
+  if (!hasSeenWelcome) {
+    return (
+      <div className="app-container">
+        <WelcomePage onComplete={() => setHasSeenWelcome(true)} />
       </div>
     );
   }

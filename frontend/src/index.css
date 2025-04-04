@@ -13,6 +13,11 @@ code {
     monospace;
 }
 
+img {
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
 
 /* Custom scrollbar */
 ::-webkit-scrollbar {

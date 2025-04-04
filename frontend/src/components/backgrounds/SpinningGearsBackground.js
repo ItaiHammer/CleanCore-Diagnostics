@@ -46,27 +46,24 @@ function SpinningGears() {
           Math.random() * Math.PI
         );
 
-        // Ensure most gears face the camera
         if (Math.random() > 0.5) {
           mesh.rotation.x = Math.PI / 2;
         }
 
         geometries.push(mesh);
 
-        // Calculate the next gear position to touch the current gear
         const angle = Math.random() * Math.PI * 2;
-        x += (radius + 10) * Math.cos(angle); // Consistently spaced out
-        y += (radius + 10) * Math.sin(angle); // Consistently spaced out
+        x += (radius + 10) * Math.cos(angle);
+        y += (radius + 10) * Math.sin(angle);
       }
     };
 
-    // Create multiple groups of gears
-    for (let i = 0; i < 10; i++) { // Increase the number of groups
+    for (let i = 0; i < 10; i++) {
       createGearGroup(
-        (Math.random() - 0.5) * 200, // More consistently spread out across the scene
-        (Math.random() - 0.5) * 200, // More consistently spread out across the scene
-        -50 + Math.random() * 100, // Ensure gears spawn in front of the camera
-        Math.floor(Math.random() * 5) + 5 // Increase the number of gears per group
+        (Math.random() - 0.5) * 200,
+        (Math.random() - 0.5) * 200,
+        -50 + Math.random() * 100,
+        Math.floor(Math.random() * 5) + 5
       );
     }
 
@@ -75,7 +72,7 @@ function SpinningGears() {
 
   useFrame(() => {
     gears.forEach((gear) => {
-      gear.rotation.z += 0.01; // Spin around the axis of rotation
+      gear.rotation.z += 0.01;
     });
   });
 

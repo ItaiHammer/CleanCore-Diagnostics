@@ -32,7 +32,7 @@ function WireframeShapes() {
         x = (Math.random() - 0.5) * 200;
         y = (Math.random() - 0.5) * 200;
         z = (Math.random() - 0.5) * 200;
-      } while (Math.abs(x) < 50 && y > 0 && y < 50 && Math.abs(z) < 50); // Avoid upper center part
+      } while (Math.abs(x) < 50 && y > 0 && y < 50 && Math.abs(z) < 50);
 
       mesh.position.set(x, y, z);
       mesh.rotation.set(

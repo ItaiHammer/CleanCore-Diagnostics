@@ -1,0 +1,40 @@
+.space-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    overflow: hidden;
+    background: transparent;
+    isolation: isolate;
+}
+
+.stars {
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(#ffffff 1px, transparent 1px),
+                radial-gradient(#ffffff 1px, transparent 1px);
+    background-size: 3px 3px, 2px 2px;
+    background-position: 0 0, 1px 1px;
+    animation: twinkle 5s infinite alternate;
+}
+
+@keyframes twinkle {
+    0%, 100% {
+        opacity: 0.9;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+.shooting-star {
+    position: absolute;
+    width: 2px;
+    height: 100px;
+    background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%);
+    border-radius: 50%;
+    filter: blur(1px);
+    pointer-events: none;
+}
