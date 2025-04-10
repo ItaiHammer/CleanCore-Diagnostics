@@ -107,7 +107,7 @@ const Dashboard = () => {
       </div>
 
       <motion.div className="metrics-grid">
-        {["CPU", "Memory"].map((metric, index) => (
+        {["CPU", "Memory", "Memory", "Memory", "Memory", "Memory", "Memory"].map((metric, index) => (
           <MetricCard
             key={index}
             metric={metric}

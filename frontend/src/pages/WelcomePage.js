@@ -107,6 +107,7 @@ function Popup({ onComplete }) {
               value={machineName}
               onChange={(e) => setMachineName(e.target.value)}
               placeholder="Choose a name for this computer"
+              maxlength="15"
               variants={childVariants}
             />
           </motion.div>
