@@ -7,8 +7,8 @@ from dotenv import load_dotenv, get_key
 from screeninfo import get_monitors
 
 # backend imports
-from backend.App import App
-from backend.System import System
+from backend.app.App import App
+from backend.system.System import System
 
 load_dotenv()
 
