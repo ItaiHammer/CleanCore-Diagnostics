@@ -9,7 +9,26 @@ def _get_cpu_cache_info():
     return l1_cache_size, l2_cache_size, l3_cache_size
 
 def _is_cpu_virtualization_enabled():
-    return "N/A"
+    system = platform.system()
+    try:
+        if system == "Windows":
+            import winreg
+            try:
+                with winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, r"SYSTEM\CurrentControlSet\Control\Session Manager\Environment") as key:
+                    hypervisor_present = winreg.QueryValueEx(key, "HypervisorPresent")[0]
+                    if bool(hypervisor_present):
+                        # Check if the hypervisor is actively running
+                        with winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, r"SYSTEM\CurrentControlSet\Control\DeviceGuard") as dg_key:
+                            hypervisor_status = winreg.QueryValueEx(dg_key, "EnableVirtualizationBasedSecurity")[0]
+                            return bool(hypervisor_status)
+                    return False
+            except FileNotFoundError:
+                return False
+
+    except Exception as e:
+        return f"Unknown ({e})"
+
+    return False
 
 def _get_cpu_brand_string():
     system = platform.system()
@@ -20,13 +39,25 @@ def _get_cpu_brand_string():
             return brand.decode().strip()
         
         elif system == "Windows":
-            return platform.processor()
+            try:
+                import winreg
+                with winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, r"HARDWARE\DESCRIPTION\System\CentralProcessor\0") as key:
+                    brand = winreg.QueryValueEx(key, "ProcessorNameString")[0]
+                    return brand.strip()
+            except Exception as e:
+                return f"Unknown ({e})"
                     
     except Exception as e:
         return f"Unknown ({e})"
     
 def get_cpu_temperature():
-    return 0
+    temp = 0
+
+    if platform.system() == "Windows":
+        import WinTmp
+        temp = WinTmp.CPU_Temp()
+
+    return temp
 
 def get_cpu_info():
     total_threads = 0
