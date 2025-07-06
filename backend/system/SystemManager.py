@@ -1,4 +1,4 @@
-from .HardwareUtils import HardwareUtils
+from .hardware_utils.HardwareUtils import HardwareUtils
 import socket
 
 class System:

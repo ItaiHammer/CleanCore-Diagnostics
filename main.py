@@ -7,8 +7,7 @@ from dotenv import load_dotenv, get_key
 from screeninfo import get_monitors
 
 # backend imports
-from backend.app.App import App
-from backend.system.System import System
+from backend.Api import Api
 
 load_dotenv()
 
@@ -21,39 +20,13 @@ else:
 print(f"APP_MODE value: {APP_MODE}")
 print(f"Current directory: {os.getcwd()}")
 
-class Api:
-    def __init__(self):
-        self.App = App()
-        self.System = System()
-
-    def get_name(self):
-        name = self.App.ConfigManager.get_config_value('systemName')
-        if name:
-            return name
-        return socket.gethostname()
-
-    def set_name(self, name):
-        self.App.ConfigManager.set_config_value('systemName', name)
-
-    def delete_name(self):
-        return self.App.ConfigManager.delete_config_value('systemName')
-
-def resource_path(relative_path):
-    """ Get absolute path to resource, works for dev and for PyInstaller """
-    try:
-        base_path = sys._MEIPASS
-    except Exception:
-        base_path = os.path.abspath(".")
-
-    return os.path.join(base_path, relative_path)
-
 def run_pywebview():
     # using build or react server depending on the APP_MODE environment variable
     if APP_MODE == 'development':
         url = 'http://localhost:3000'
         print("🔧 Development mode: Using React dev server")
     else:
-        build_path = resource_path('web/index.html')
+        build_path = Api.resource_path('web/index.html')
         
         if not os.path.exists(build_path):
             raise FileNotFoundError(f"Production build not found at: {build_path}")
@@ -78,7 +51,7 @@ def run_pywebview():
         height=int(screen_height * 0.8),
     )
 
-    icon_path = resource_path('./frontend/public/favicon.ico')
+    icon_path = Api.resource_path('./frontend/public/favicon.ico')
     webview.start(
         debug=APP_MODE == 'development',
         icon=icon_path

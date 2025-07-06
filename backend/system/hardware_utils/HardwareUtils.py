@@ -2,13 +2,11 @@ import platform
 import psutil
 import math
 
+from .get_system_info.get_cpu_info import get_cpu_info
+
 class HardwareUtils:
     def get_cpu_data(self):
-        return {
-            "name": platform.processor(),
-            "percent_usage": psutil.cpu_percent(interval=0.1, percpu=False),
-            "speed": psutil.cpu_freq(percpu=False).current
-        }
+        return get_cpu_info()
 
     def get_memory_data(self):
         return {
